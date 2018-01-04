@@ -7,5 +7,5 @@
     "test": "mocha --opts mocha.opts"
   },
   "author": "Ya'ar Hever",
-  "license": "ISC"
+  "license": "Apache-2"
 }
