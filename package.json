@@ -1,0 +1,11 @@
+{
+  "name": "cards-with-symbols",
+  "version": "1.0.0",
+  "description": "Generate all possible cards with a pool of n cards, such that every pair of cards has one and only one symbol in common",
+  "main": "src/index.ts",
+  "scripts": {
+    "test": "mocha --opts mocha.opts"
+  },
+  "author": "Ya'ar Hever",
+  "license": "ISC"
+}
