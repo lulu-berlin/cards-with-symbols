@@ -7,5 +7,13 @@
     "test": "mocha --opts mocha.opts"
   },
   "author": "Ya'ar Hever",
-  "license": "Apache-2"
+  "license": "Apache-2",
+  "dependencies": {
+    "@types/chai": "^4.0.10",
+    "@types/mocha": "^2.2.45",
+    "chai": "^4.1.2",
+    "mocha": "^4.1.0",
+    "ts-node": "^4.1.0",
+    "typescript": "^2.6.2"
+  }
 }
