@@ -44,4 +44,14 @@ describe('generateFirstBlock()', () => {
       [1, 6, 7]
     ]);
   });
+
+  it('should return the first block with 4 places', () => {
+    const result = generateFirstBlock(4);
+    expect(result).to.eql([
+      [1, 2, 3, 4],
+      [1, 5, 6, 7],
+      [1, 8, 9, 10],
+      [1, 11, 12, 13]
+    ]);
+  });
 });
