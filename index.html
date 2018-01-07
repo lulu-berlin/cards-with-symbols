@@ -1,0 +1,80 @@
+"use strict";
+var generateSymbols = function (places) { return Array.from({ length: places * places - places + 1 }, function (_, i) { return i + 1; }); };
+var generateFirstBlock = function (places) {
+    var symbols = generateSymbols(places);
+    var first = symbols[0];
+    return Array.from({ length: places }, function (_, i) {
+        var size = places - 1;
+        var index = i * size + 1;
+        var rest = symbols.slice(index, index + size);
+        return [first].concat(rest);
+    });
+};
+var generateCards = function (places) {
+    var symbols = generateSymbols(places);
+    var firstBlock = generateFirstBlock(places);
+    return Array.prototype.concat.apply(firstBlock, Array.from({ length: places - 1 }, function (_, s) { return Array.from({ length: places - 1 }, function (_, x) { return [
+        symbols[s + 1]
+    ].concat(Array.from({ length: places - 1 }, function (_, y) { return firstBlock[y + 1][(y * s + x) % (places - 1) + 1]; })); }); }));
+};
+var inputElement;
+var resultDivElement;
+function render() {
+    var places = +inputElement.value;
+    if (places < 3) {
+        places = 3;
+    }
+    else if (places > 30) {
+        places = 30;
+    }
+    inputElement.value = "" + places;
+    // clear the result element
+    while (resultDivElement.hasChildNodes()) {
+        if (resultDivElement.lastChild) {
+            resultDivElement.removeChild(resultDivElement.lastChild);
+        }
+    }
+    var symbols = generateSymbols(places);
+    var title = document.createElement('h1');
+    title.innerText = "Cards for " + places + " places and " + symbols.length + " symbols";
+    resultDivElement.appendChild(title);
+    var cards = generateCards(places);
+    var table = document.createElement('table');
+    table.style.border = '1px solid #000';
+    cards.forEach(function (card, i) {
+        var tr = document.createElement('tr');
+        card.forEach(function (sym, j) {
+            var td = document.createElement('td');
+            td.innerText = "" + sym;
+            td.style.textAlign = 'center';
+            var evenI = i % 2;
+            var evenJ = j % 2;
+            if ((evenI && !evenJ) || (!evenI && evenJ)) {
+                td.style.backgroundColor = '#444';
+                td.style.color = '#fff';
+            }
+            tr.appendChild(td);
+        });
+        table.appendChild(tr);
+    });
+    resultDivElement.appendChild(table);
+}
+function init() {
+    if (!inputElement) {
+        var input = document.querySelector('input');
+        if (!input) {
+            throw new Error('Cannot find DOM element.');
+        }
+        inputElement = input;
+    }
+    if (!resultDivElement) {
+        var div = document.querySelector('#result');
+        if (!div) {
+            throw new Error('Cannot find DOM element.');
+        }
+        resultDivElement = div;
+    }
+    render();
+    inputElement.onchange = render;
+}
+setTimeout(window.onload = init, 500);
