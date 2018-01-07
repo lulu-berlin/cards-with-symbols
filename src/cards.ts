@@ -18,3 +18,25 @@ export const generateFirstBlock = (places: number): number[][] => {
     }
   );
 };
+
+export const generateCards = (places: number): number[][] => {
+  const symbols = generateSymbols(places);
+  const firstBlock = generateFirstBlock(places);
+
+  return Array.prototype.concat.apply(
+    firstBlock,
+    Array.from(
+      {length: places - 1},
+      (_, s) => Array.from(
+        {length: places - 1},
+        (_, x) => [
+          symbols[s + 1],
+          ...Array.from(
+            {length: places - 1},
+            (_, y) => firstBlock[y + 1][(y * s + x) % (places - 1) + 1]
+          )
+        ]
+      )
+    )
+  );
+};
